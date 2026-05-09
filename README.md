@@ -1,66 +1,86 @@
-# OS CPU Scheduling & Resource Management Simulator
+# 🖥️ OS CPU Scheduling & Resource Management Simulator
 
-A comprehensive Python-based simulation of an Operating System's CPU scheduler and resource manager. This project simulates process execution, I/O handling, resource allocation, and deadlock detection/recovery using a Priority-based scheduling algorithm with Round-Robin characteristics.
+A high-fidelity Python simulation of an Operating System's kernel-level tasks, focusing on **CPU Scheduling**, **Dynamic Resource Allocation**, and **Deadlock Management**. This project demonstrates complex process synchronization and performance optimization using a hybrid Priority and Round-Robin scheduling approach.
 
-## 🚀 Features
+---
 
-- **Multi-Queue Simulation**: Implements Ready, Wait (Resource), and I/O queues.
-- **Dynamic Scheduling**: Priority-based scheduling with internal logic for handling Round-Robin slices.
-- **Resource Management**: Processes can request (`R[n]`) and release (`F[n]`) shared resources dynamically during CPU bursts.
-- **Deadlock Handling**:
-    - **Detection**: Uses a Resource Allocation Graph (RAG) to identify cycles and potential deadlocks.
-    - **Recovery**: Implements a recovery mechanism to resolve deadlocks by preempting/restarting high-priority processes.
-- **I/O Operations**: Simulates non-blocking I/O bursts where multiple processes can perform I/O simultaneously.
-- **Performance Analysis**:
-    - Generates a detailed **Gantt Chart**.
-    - Calculates **Average Waiting Time**.
-    - Calculates **Average Turnaround Time**.
+## 🌟 Key Features
 
-## 📂 Project Structure
+- **🎯 Hybrid Scheduling Algorithm**: 
+  - Uses **Priority-based scheduling** as the primary logic.
+  - Implements **Round-Robin (Quantum = 5)** for processes sharing the same priority level.
+- **🏗️ Comprehensive Queue Management**: 
+  - **Ready Queue**: Processes waiting for CPU.
+  - **Wait Queue**: Processes blocked by resource unavailability.
+  - **I/O Queue**: Processes performing non-blocking I/O operations.
+- **🔐 Advanced Resource Management**: 
+  - Dynamic request (`R[n]`) and release (`F[n]`) of shared resources during execution.
+  - Real-time tracking of resource ownership.
+- **🛡️ Deadlock Handling System**:
+  - **Detection**: Implements a **Resource Allocation Graph (RAG)** to identify circular wait conditions.
+  - **Recovery**: Automatic resolution of deadlocks by preempting/restarting high-priority processes involved in the cycle.
+- **📊 Performance Analytics**:
+  - Generates a text-based **Gantt Chart** for visual execution flow.
+  - Calculates **Average Waiting Time** and **Average Turnaround Time**.
 
-- `code.py`: The main simulation engine.
-- `test.txt`: Input file containing process definitions.
-- `README.md`: This documentation.
+---
 
-## 🛠️ Input File Format (`test.txt`)
+## 📁 Project Components
 
-The simulator reads process information from `test.txt`. Each line represents a process with the following structure:
+| File | Description |
+| :--- | :--- |
+| `code.py` | The core simulation engine containing the scheduler and RAG logic. |
+| `test.txt` | Input configuration file defining processes, bursts, and resource requests. |
+| `README.md` | Comprehensive documentation and usage guide. |
+
+---
+
+## 🛠️ Input Specification (`test.txt`)
+
+The simulator processes a sequence of instructions defined in `test.txt`. Each line represents a unique process:
 
 ```text
-[PID] [Arrival] [Priority] [CPU Burst/Resource Commands] [IO Burst] [CPU Burst/Resource Commands] ...
+[PID] [Arrival] [Priority] [CPU Burst/Resource Commands] [IO Burst] ...
 ```
 
-### Examples:
-- `1 0 1 CPU{5} IO{8} CPU{5}`: PID 1, arrives at time 0, priority 1. Executes 5 units of CPU, then 8 units of IO, then 5 units of CPU.
-- `2 3 5 CPU{R[2],6,F[2]}`: PID 2, arrives at time 3, priority 5. Requests resource 2, runs for 6 units, then frees resource 2.
+### Resource Command Syntax:
+- **`R[n]`**: Request resource number `n`.
+- **`F[n]`**: Release resource number `n`.
+- **`CPU{...}`**: Defines a CPU burst. Can contain nested resource commands.
+- **`IO{n}`**: Defines an I/O burst of `n` time units.
 
-### Resource Commands:
-- `R[n]`: Request resource number `n`.
-- `F[n]`: Free resource number `n`.
+### Example Input:
+`5 12 2 CPU{10,R[1],5,R[2],8,F[2],3,F[1],4}`
+> PID 5 arrives at T=12 with Priority 2. It performs a complex CPU burst requesting/releasing Resource 1 and 2.
 
-## ⚙️ How to Run
+---
 
-1. Ensure you have Python 3.x installed.
-2. Prepare your test cases in `test.txt`.
-3. Run the script:
+## ⚙️ Execution Guide
+
+1. **Prerequisites**: Python 3.8+ installed.
+2. **Setup**: Define your process workload in `test.txt`.
+3. **Run**:
    ```bash
    python code.py
    ```
 
-## 📊 Output
+---
 
-The script outputs the following metrics to the console:
-1. **Process Stats**: `[PID, Wait_time, IO_time, Ready_time]`
-2. **Gantt Chart**: Visual representation of CPU occupancy over time.
-3. **Average Waiting Time**: Total ready time divided by number of processes.
-4. **Average Turnaround Time**: Total time from arrival to completion.
+## 📈 System Output
 
-## 👤 Author
-**Ibraheem Sleet**
-Student ID (1): 1220200
+Upon completion, the simulator provides:
+1. **Detailed Process Logs**: `[PID, Wait_time, IO_time, Ready_time]` for every process.
+2. **Gantt Chart**: A chronological map of CPU usage.
+3. **Efficiency Metrics**: Average Waiting and Turnaround times to evaluate system throughput.
 
+---
 
-**Anwar Atawna**
-Student ID (2): 1222275
+## 👥 Authors
 
-ENCS3390 - Operating Systems Project
+| Name | Student ID | Role |
+| :--- | :--- | :--- |
+| **Ibraheem Sleet** | 1220200 | Lead Developer / Simulation Logic |
+| **Anwar Atawna** | 1222275 | Resource Management / Deadlock Logic |
+
+**ENCS3390 - Operating Systems Project**  
+*Birzeit University*
