@@ -57,5 +57,10 @@ The script outputs the following metrics to the console:
 
 ## 👤 Author
 **Ibraheem Sleet**
-Student ID: 1220200
+Student ID (1): 1220200
+
+
+**Anwar Atawna**
+Student ID (2): 1222275
+
 ENCS3390 - Operating Systems Project
